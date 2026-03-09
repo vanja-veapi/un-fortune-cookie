@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>(Un)Fortune Cookie</title>
+
+		<link rel="stylesheet" href="style.css" />
+	</head>
+	<body>
+		<h1>(Un)Fortune Cookie</h1>
+		<div class="actions">
+			<div class="choice">
+				<label for="get-fortune">Fortune</label>
+				<input
+					type="radio"
+					id="get-fortune"
+					name="fortune-cookie"
+					value="fortune"
+					checked
+				/>
+			</div>
+			<div class="choice">
+				<label for="get-misfortune">Misfortune</label>
+				<input
+					type="radio"
+					id="get-misfortune"
+					name="fortune-cookie"
+					value="misfortune"
+				/>
+			</div>
+		</div>
+		<input type="text" id="signature" placeholder="Signature (optional)" />
+		<button type="button" id="create-cookie-btn">
+			Create (un)fortune cookie
+		</button>
+
+		<br />
+		<span class="d-none"></span>
+
+		<!-- defer is equivalent to DOMContentLoaded:
+     it waits for the HTML document to be parsed,
+     but does not wait for images or other resources -->
+		<script type="module" src="js/main.js" defer></script>
+	</body>
+</html>
+
+<!-- 🍀 Klasične fortune poruke
+
+Velike stvari počinju malim korakom.
+
+Sreća prati hrabre odluke.
+
+Neočekivani susret uskoro će ti izmamiti osmeh.
+
+Ono što tražiš već je na putu ka tebi.
+
+Danas je dobar dan da započneš nešto novo.
+
+Strpljenje će ti se uskoro isplatiti.
+
+😄 Smešne fortune poruke
+
+Sutra ćeš pojesti nešto veoma ukusno.
+
+Tvoj frižider krije odgovore na mnoga pitanja.
+
+Pauza za kafu je uvek dobra ideja.
+
+Neko upravo misli na tebe… verovatno jer mu duguješ poruku.
+
+Velika sreća dolazi… posle još jedne dremke.
+
+✨ Motivacione poruke
+
+Veruj procesu — napreduješ više nego što misliš.
+
+Svaki dan je nova šansa za bolju verziju tebe.
+
+Tvoja upornost je tvoja supermoć.
+
+Ne čekaj savršen trenutak — stvori ga.
+
+Male pobede vode velikim uspesima.
+
+🔮 Misteriozne / zen poruke
+
+Odgovor koji tražiš stiže kada prestaneš da ga juriš.
+
+Tišina često govori najglasnije.
+
+Promena dolazi kada je najmanje očekuješ.
+
+Put se otkriva onima koji hodaju.
+
+Ponekad je skretanje zapravo pravi smer. -->
