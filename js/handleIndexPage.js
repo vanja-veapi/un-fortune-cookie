@@ -74,8 +74,8 @@ const buildCookieData = () => {
 		message: STATE.checkedCookie
 			? getFortuneCookieMessage()
 			: getMisfortuneCookieMessage(),
-		signature: signatureValue ?? 'unnamed',
-		date: new Date().toTimeString(),
+		signature: signatureValue,
+		date: Date.now(),
 	};
 };
 
