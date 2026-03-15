@@ -1,4 +1,4 @@
-import { decodeUrlParam } from './utils/decodeUrlParam.js';
+import { decodeUrlParam } from '../utils/decodeUrlParam.js';
 
 const MS_PER_SECOND = 1000;
 const SECONDS_PER_MINUTE = 60;
@@ -13,7 +13,7 @@ const redirectHome = (message) => {
 	window.location.replace('/');
 };
 
-export const handleOpenCookiePage = () => {
+export const openCookiePage = () => {
 	if (!window.location.hash) {
 		redirectHome('Treba da budes redirektovan');
 		return;

@@ -1,13 +1,13 @@
-import { encodeUrlParam } from './utils/encodeUrlParam.js';
+import { encodeUrlParam } from '../utils/encodeUrlParam.js';
 
-import fortuneCookie from '../data/fortune-cookie.json' with { type: 'json' };
-import { decodeUrlParam } from './utils/decodeUrlParam.js';
+import fortuneCookie from '../../data/fortune-cookie.json' with { type: 'json' };
+import { decodeUrlParam } from '../utils/decodeUrlParam.js';
 
 const STATE = {
 	checkedCookie: null,
 };
 
-export const handleIndexPage = () => {
+export const indexPage = () => {
 	const fortuneCookies = document.querySelectorAll(
 		'input[name="fortune-cookie"]',
 	);

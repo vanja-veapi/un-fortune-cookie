@@ -1,10 +1,9 @@
-// TODO Verovatno je bolji nazivm samo naziv stranice bez handle
-import { handleIndexPage } from './handleIndexPage.js';
-import { handleOpenCookiePage } from './handleOpenCookiePage.js';
+import { indexPage } from './pages/indexPage.js';
+import { openCookiePage } from './pages/openCookiePage.js';
 
 const routes = {
-	'/index.html': handleIndexPage,
-	'/open-cookie.html': handleOpenCookiePage,
+	'/index.html': indexPage,
+	'/open-cookie.html': openCookiePage,
 };
 
 function runRoute() {
