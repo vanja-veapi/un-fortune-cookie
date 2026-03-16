@@ -11,6 +11,9 @@
 .absolute {
 	position: absolute;
 }
+.relative {
+	position: relative;
+}
 
 .transition {
 	transition: 0.5s ease-in-out;
@@ -37,6 +40,12 @@
 }
 .container {
 	height: 320px;
+	width: 480px;
+
+	margin: 0 auto;
+
+	display: flex;
+	align-items: center;
 }
 
 .btn-open-cookie {
@@ -46,7 +55,7 @@
 }
 
 img {
-	width: 100%;
+	width: 480px;
 }
 main {
 	font-size: 24px;
@@ -118,6 +127,20 @@ kbd {
 
 .pulse {
 	animation: pulse-animation 2s infinite;
+}
+
+.controls-container {
+	z-index: 1;
+
+	position: absolute;
+	top: 20%;
+	&.left-control {
+		left: 20%;
+	}
+
+	&.right-control {
+		right: 23%;
+	}
 }
 
 @keyframes pulse-animation {

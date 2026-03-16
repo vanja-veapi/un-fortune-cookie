@@ -1,5 +1,4 @@
 import { decodeUrlParam } from '../utils/decodeUrlParam.js';
-import { sleep } from '../utils/sleep.js';
 
 const MS_PER_SECOND = 1000;
 const SECONDS_PER_MINUTE = 60;
@@ -10,10 +9,10 @@ const ONE_DAY_IN_MS =
 
 const MQ_MEDIUM_BREAKPOINT = 768;
 
-const COOKIE_X_START = 81;
-const COOKIE_X_END = 309;
-const COOKIE_Y_START = 134;
-const COOKIE_Y_END = 297;
+const COOKIE_X_START = 75;
+const COOKIE_X_END = 374;
+const COOKIE_Y_START = 95;
+const COOKIE_Y_END = 286;
 
 const redirectHome = (message) => {
 	alert(message);
@@ -34,7 +33,7 @@ export const openCookiePage = () => {
 		return;
 	}
 
-	if (window.screen.width <= MQ_MEDIUM_BREAKPOINT) {
+	if (window.innerWidth <= MQ_MEDIUM_BREAKPOINT) {
 		const handleTouchStart = (ev) => {
 			const hasTwoTouches = ev.touches.length === 2;
 			const isTouchInRange = (touch) => {
@@ -45,6 +44,8 @@ export const openCookiePage = () => {
 
 				return isInXRange && isInYRange;
 			};
+
+			console.log({ touches: ev.touches });
 			if (
 				hasTwoTouches &&
 				isTouchInRange(ev.touches[0]) &&
@@ -55,7 +56,6 @@ export const openCookiePage = () => {
 		};
 
 		document.addEventListener('touchstart', handleTouchStart);
-		document.removeEventListener('touchstart', handleTouchStart);
 
 		return;
 	}
@@ -97,7 +97,7 @@ async function openFortuneCookie() {
 	playSound();
 	splitCookieAnimation(this);
 
-	await sleep(700);
+	await new Promise((resolve) => requestAnimationFrame(resolve));
 
 	renderMessageFromHash();
 }
@@ -106,13 +106,16 @@ const playSound = () => {
 	// TODO Dodaj sound
 	// const audio = new Audio('../../audio/crunch.mp3');
 };
+
 const splitCookieAnimation = async () => {
 	showBrokenCookieImages();
 
-	// Mora da se napravi mali delay kako bi animacija mogla da se primeni
-	await sleep(50); // requestAnimationFrame();
+	await new Promise((resolve) => requestAnimationFrame(resolve));
 
-	removeWholeCookieImage();
+	removeControlsContainer();
+
+	await new Promise((resolve) => requestAnimationFrame(resolve));
+
 	breakCookieAnimation();
 };
 
@@ -123,9 +126,11 @@ const showBrokenCookieImages = () => {
 	});
 };
 
-const removeWholeCookieImage = () => {
-	const wholeCookie = document.querySelector('.whole-cookie');
-	wholeCookie.classList.replace('flex-center', 'd-none');
+const removeControlsContainer = () => {
+	const controlContainer = document.querySelectorAll('.controls-container');
+	controlContainer.forEach((container) => {
+		container.classList.replace('flex-center', 'd-none');
+	});
 };
 const breakCookieAnimation = () => {
 	const cookieParts = document.querySelectorAll('.cookie-fortune');
@@ -142,7 +147,8 @@ const renderMessageFromHash = () => {
 };
 
 const removeOpacityFromMessagePaper = async () => {
-	await sleep(50);
+	await new Promise((resolve) => requestAnimationFrame(resolve));
+
 	const messagePaper = document.querySelector('main');
 	messagePaper.classList.remove('opacity-0');
 };

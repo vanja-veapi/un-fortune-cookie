@@ -9,26 +9,24 @@
 	<body>
 		<h1>Stranica za otvaranje kolacica srece</h1>
 
-		<div class="flex-center container">
+		<div class="relative container">
+			<div class="left-control flex-center controls-container">
+				<kbd class="flex-center prevent-select d-sm-none">A</kbd>
+				<div class="left circle pulse green d-md-none"></div>
+			</div>
+
 			<img
 				src="../../img/whole-cookie-split-left.png"
 				alt="Kolacic srece"
-				width="480"
-				class="absolute transition broken-cookie cookie-fortune prevent-select d-none"
+				class="absolute transition broken-cookie cookie-fortune prevent-select"
 			/>
 			<img
 				src="../../img/whole-cookie-split-right.png"
 				alt="Kolacic srece"
-				width="480"
-				class="absolute transition broken-cookie cookie-fortune prevent-select d-none"
+				class="absolute transition broken-cookie cookie-fortune prevent-select"
 			/>
 
-			<div class="flex-center whole-cookie">
-				<kbd class="flex-center prevent-select d-sm-none">A</kbd>
-				<div class="left circle pulse green d-md-none"></div>
-
-				<img src="img/whole-cookie.png" alt="Kolacic srece" />
-
+			<div class="right-control flex-center controls-container">
 				<div class="right circle pulse green d-md-none"></div>
 				<kbd class="flex-center prevent-select d-sm-none">D</kbd>
 			</div>
