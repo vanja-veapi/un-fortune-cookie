@@ -5,9 +5,10 @@ const MS_PER_SECOND = 1000;
 const SECONDS_PER_MINUTE = 60;
 const MINUTES_PER_HOUR = 60;
 const HOURS_PER_DAY = 24;
-
 const ONE_DAY_IN_MS =
 	HOURS_PER_DAY * MINUTES_PER_HOUR * SECONDS_PER_MINUTE * MS_PER_SECOND; // 86_400_000
+
+const MQ_MEDIUM_BREAKOPINT = 768;
 
 const redirectHome = (message) => {
 	alert(message);
@@ -28,8 +29,30 @@ export const openCookiePage = () => {
 		return;
 	}
 
+	if (window.screen.width <= MQ_MEDIUM_BREAKOPINT) {
+		document.addEventListener('touchstart', (ev) => {
+			console.log({ loc: ev.touches });
+			const hasTwoTouches = ev.touches.length === 2;
+			const isTouchInRange = (touch) => {
+				const { clientX: x, clientY: y } = touch;
+				const isInXRange = x >= 81 && x <= 309;
+				const isInYRange = y >= 134 && y <= 297;
+				return isInXRange && isInYRange;
+			};
+			if (
+				hasTwoTouches &&
+				isTouchInRange(ev.touches[0]) &&
+				isTouchInRange(ev.touches[1])
+			) {
+				openFortuneCookie();
+			}
+		});
+
+		return;
+	}
+
 	const keysPressed = {};
-	const kbds = document.querySelectorAll('.keys-container kbd');
+	const kbds = document.querySelectorAll('kbd');
 
 	const handleKeyDown = (e) => {
 		if (e.key.toLowerCase() === 'a') {
@@ -59,11 +82,6 @@ export const openCookiePage = () => {
 		}
 		delete keysPressed[event.key.toLowerCase()];
 	});
-
-	const btnOpenCookie = document.querySelector('#btn-open-cookie');
-	btnOpenCookie.addEventListener('click', async function () {}, {
-		once: true,
-	});
 };
 
 async function openFortuneCookie() {
@@ -80,10 +98,13 @@ const playSound = () => {
 	// const audio = new Audio('../../audio/crunch.mp3');
 };
 const splitCookieAnimation = async () => {
-	const brokenCookieContainer = createBrokenCookieContainer();
-	insertBrokenCookieImages(brokenCookieContainer);
+	createBrokenCookieContainer();
+	showBrokenCookieImages();
+
 	// Mora da se napravi mali delay kako bi animacija mogla da se primeni
-	await sleep(500);
+	await sleep(50);
+
+	removeWholeCookieImage();
 	breakCookieAnimation();
 };
 
@@ -93,18 +114,17 @@ const createBrokenCookieContainer = () => {
 	return cookieContainer;
 };
 
-const insertBrokenCookieImages = (brokenCookieContainer) => {
-	const parentContainer = document.querySelector('.container');
-	const cssClasses = 'cookie-fortune absolute transition prevent-select';
-
-	brokenCookieContainer.innerHTML = `
-		<img src="../../img/whole-cookie-split-left.png" alt="Kolacic srece" width="480" class="${cssClasses}" />
-		<img src="../../img/whole-cookie-split-right.png" alt="Kolacic srece" width="480" class="${cssClasses}" />`;
-
-	// ! Desava mi se flicker jer brisem btn, a dodajem broken cookie slike koje imaju transition. Mozda bih mogao da dodam opacity-0 na pocetku, a onda da je skinem nakon 50ms, kada se slike ubace u DOM. Tako ne bi bilo vidljivo da se slike ubacuju, a transition bi i dalje radio.
-	parentContainer.replaceChildren(brokenCookieContainer);
+const showBrokenCookieImages = () => {
+	const brokenCookie = document.querySelectorAll('.broken-cookie');
+	brokenCookie.forEach((img) => {
+		img.classList.remove('d-none');
+	});
 };
 
+const removeWholeCookieImage = () => {
+	const wholeCookie = document.querySelector('.whole-cookie');
+	wholeCookie.classList.replace('flex-center', 'd-none');
+};
 const breakCookieAnimation = () => {
 	const cookieParts = document.querySelectorAll('.cookie-fortune');
 	cookieParts.forEach((part, i) =>
