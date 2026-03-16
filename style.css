@@ -56,3 +56,35 @@ main {
 button {
 	cursor: pointer;
 }
+
+.keys-container {
+	width: 50%;
+	position: absolute;
+
+	display: flex;
+	justify-content: inherit;
+
+	justify-content: space-around;
+}
+kbd {
+	width: 5rem;
+	height: 5rem;
+	background-color: #eeeeee;
+	border-radius: 50%;
+	border: 1px solid #b4b4b4;
+	box-shadow:
+		0 1px 1px rgb(0 0 0 / 0.2),
+		0 2px 0 0 rgb(255 255 255 / 0.7) inset;
+	color: #333333;
+
+	font-size: 2.5em;
+	font-weight: bold;
+	line-height: 1;
+	padding: 1em;
+	white-space: nowrap;
+
+	&.active {
+		background-color: #fd8522;
+		color: #eee;
+	}
+}

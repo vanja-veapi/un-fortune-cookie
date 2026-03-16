@@ -28,26 +28,62 @@ export const openCookiePage = () => {
 		return;
 	}
 
+	const keysPressed = {};
+	const kbds = document.querySelectorAll('.keys-container kbd');
+
+	const handleKeyDown = (e) => {
+		if (e.key.toLowerCase() === 'a') {
+			kbds[0].classList.add('active');
+		}
+		if (e.key.toLowerCase() === 'd') {
+			kbds[1].classList.add('active');
+		}
+
+		// If the user presses Shift + A + D, or CAPS LOCK is on and they press A + D, it should also work.
+		keysPressed[e.key.toLowerCase()] = true;
+		if (keysPressed['a'] && keysPressed['d']) {
+			console.log('Both A and D are pressed together!');
+			openFortuneCookie();
+			// ✅ ugasi listener
+			document.removeEventListener('keydown', handleKeyDown);
+		}
+	};
+	document.addEventListener('keydown', handleKeyDown);
+
+	document.addEventListener('keyup', (event) => {
+		if (event.key.toLowerCase() === 'a') {
+			kbds[0].classList.remove('active');
+		}
+		if (event.key.toLowerCase() === 'd') {
+			kbds[1].classList.remove('active');
+		}
+		delete keysPressed[event.key.toLowerCase()];
+	});
+
 	const btnOpenCookie = document.querySelector('#btn-open-cookie');
-	btnOpenCookie.addEventListener(
-		'click',
-		async function () {
-			splitCookieAnimation(this);
-
-			await sleep(700);
-
-			renderMessageFromHash();
-		},
-		{
-			once: true,
-		},
-	);
+	btnOpenCookie.addEventListener('click', async function () {}, {
+		once: true,
+	});
 };
 
+async function openFortuneCookie() {
+	playSound();
+	splitCookieAnimation(this);
+
+	await sleep(700);
+
+	renderMessageFromHash();
+}
+
+const playSound = () => {
+	// TODO Dodaj sound
+	// const audio = new Audio('../../audio/crunch.mp3');
+};
 const splitCookieAnimation = async () => {
 	const brokenCookieContainer = createBrokenCookieContainer();
 	insertBrokenCookieImages(brokenCookieContainer);
-
+	// Mora da se napravi mali delay kako bi animacija mogla da se primeni
+	await sleep(500);
 	breakCookieAnimation();
 };
 
@@ -69,8 +105,7 @@ const insertBrokenCookieImages = (brokenCookieContainer) => {
 	parentContainer.replaceChildren(brokenCookieContainer);
 };
 
-const breakCookieAnimation = async () => {
-	await sleep(500);
+const breakCookieAnimation = () => {
 	const cookieParts = document.querySelectorAll('.cookie-fortune');
 	cookieParts.forEach((part, i) =>
 		part.classList.add(i === 0 ? 'slide-left' : 'slide-right'),
