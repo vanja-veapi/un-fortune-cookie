@@ -120,7 +120,7 @@ const splitCookieAnimation = async () => {
 };
 
 const showBrokenCookieImages = () => {
-	const brokenCookie = document.querySelectorAll('.broken-cookie');
+	const brokenCookie = document.querySelectorAll('.cookie-piece');
 	brokenCookie.forEach((img) => {
 		img.classList.remove('d-none');
 	});
@@ -133,7 +133,7 @@ const removeControlsContainer = () => {
 	});
 };
 const breakCookieAnimation = () => {
-	const cookieParts = document.querySelectorAll('.cookie-fortune');
+	const cookieParts = document.querySelectorAll('.cookie-piece');
 	cookieParts.forEach((part, i) =>
 		part.classList.add(i === 0 ? 'slide-left' : 'slide-right'),
 	);
