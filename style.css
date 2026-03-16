@@ -7,3 +7,45 @@
 .d-none {
 	display: none;
 }
+
+.absolute {
+	position: absolute;
+}
+
+.transition {
+	transition: 0.5s ease-in-out;
+}
+.slide-right {
+	transform: translateX(15rem);
+}
+.slide-left {
+	transform: translateX(-15rem);
+}
+
+.flex-center {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.container {
+	height: 320px;
+}
+
+.btn-open-cookie {
+	height: inherit;
+	border: unset;
+	background-color: unset;
+}
+
+main {
+	font-size: 24px;
+	margin-top: 20px;
+	border: 2px solid red;
+
+	padding: 1rem;
+	z-index: -1;
+}
+
+button {
+	cursor: pointer;
+}

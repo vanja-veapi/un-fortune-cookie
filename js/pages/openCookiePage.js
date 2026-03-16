@@ -1,4 +1,5 @@
 import { decodeUrlParam } from '../utils/decodeUrlParam.js';
+import { sleep } from '../utils/sleep.js';
 
 const MS_PER_SECOND = 1000;
 const SECONDS_PER_MINUTE = 60;
@@ -28,10 +29,49 @@ export const openCookiePage = () => {
 	}
 
 	const btnOpenCookie = document.querySelector('#btn-open-cookie');
+	btnOpenCookie.addEventListener(
+		'click',
+		async function () {
+			splitCookieAnimation(this);
 
-	btnOpenCookie.addEventListener('click', renderMessageFromHash, {
-		once: true,
-	});
+			await sleep(700);
+
+			renderMessageFromHash();
+		},
+		{
+			once: true,
+		},
+	);
+};
+
+const splitCookieAnimation = async () => {
+	const brokenCookieContainer = createBrokenCookieContainer();
+	insertBrokenCookieImages(brokenCookieContainer);
+
+	breakCookieAnimation();
+};
+
+const createBrokenCookieContainer = () => {
+	const cookieContainer = createDOMElement('div');
+	cookieContainer.classList.add('flex-center');
+	return cookieContainer;
+};
+
+const insertBrokenCookieImages = (brokenCookieContainer) => {
+	const parentContainer = document.querySelector('.container');
+	brokenCookieContainer.innerHTML = `
+		<img src="../../img/whole-cookie-split-left.png" alt="Kolacic srece" width="480" class="cookie-fortune absolute transition" />
+		<img src="../../img/whole-cookie-split-right.png" alt="Kolacic srece" width="480" class="cookie-fortune absolute transition" />`;
+
+	parentContainer.replaceChildren(brokenCookieContainer);
+};
+
+const breakCookieAnimation = async () => {
+	await sleep(500);
+	const cookieParts = document.querySelectorAll('.cookie-fortune');
+	cookieParts.forEach((part, i) =>
+		part.classList.add(i === 0 ? 'slide-left' : 'slide-right'),
+	);
 };
 
 const renderMessageFromHash = () => {
@@ -41,40 +81,36 @@ const renderMessageFromHash = () => {
 };
 
 const renderMessagePaper = ({ message, signature, date }) => {
-	const container = createDOMElement('main', {
-		style: {
-			fontSize: '24px',
-			marginTop: '20px',
-			border: '2px solid red',
-		},
-	});
+	const messageContainer = createDOMElement('main');
+	messageContainer.classList.add('absolute');
 
-	container.appendChild(createDOMElement('p', { content: message }));
-	container.appendChild(
+	messageContainer.appendChild(createDOMElement('p', { content: message }));
+	messageContainer.appendChild(
 		createDOMElement('p', { content: `Datum: ${date.toLocaleString()}` }),
 	);
 
 	if (signature) {
-		container.appendChild(
+		messageContainer.appendChild(
 			createDOMElement('p', { content: `Potpis: ${signature}` }),
 		);
 	}
 
-	document.body.appendChild(container);
+	const cookieContainer = document.querySelector('.container');
+	cookieContainer.appendChild(messageContainer);
 };
 
 const createDOMElement = (tagName, options = {}) => {
-	const { content, style } = options;
+	const { content } = options;
 
 	const element = document.createElement(tagName);
 
 	if (content) element.textContent = content;
 
-	if (style) {
-		for (const key in style) {
-			element.style[key] = style[key];
-		}
-	}
+	// if (style) {
+	// 	for (const key in style) {
+	// 		element.style[key] = style[key];
+	// 	}
+	// }
 
 	return element;
 };
