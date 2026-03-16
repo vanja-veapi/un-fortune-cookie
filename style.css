@@ -1,8 +1,18 @@
-* {
+/* =========================
+	RESET
+========================= */
+
+*,
+*::before,
+*::after {
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
 }
+
+/* =========================
+	UTILITIES
+========================= */
 
 .d-none {
 	display: none;
@@ -15,51 +25,68 @@
 	position: relative;
 }
 
-.transition {
-	transition: 0.5s ease-in-out;
-}
-.slide-right {
-	transform: translateX(15rem);
-}
-.slide-left {
-	transform: translateX(-15rem);
-}
-.opacity-0 {
-	opacity: 0;
-}
-.prevent-select {
-	-webkit-user-select: none; /* Safari */
-	-ms-user-select: none; /* IE 10 and IE 11 */
-	user-select: none; /* Standard syntax */
-}
-
 .flex-center {
 	display: flex;
 	justify-content: center;
 	align-items: center;
 }
+
+.opacity-0 {
+	opacity: 0;
+}
+
+/* animiraj SAMO šta treba */
+.transition {
+	transition:
+		transform 0.5s ease-in-out,
+		opacity 0.5s ease-in-out;
+}
+
+.prevent-select {
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+/* =========================
+	ANIMATIONS
+========================= */
+
+.slide-right {
+	transform: translateX(15rem);
+}
+
+.slide-left {
+	transform: translateX(-15rem);
+}
+
+/* CSS svojstvo
+will-change služi za optimizaciju performansi, nagoveštavajući brauzeru da će se
+određeni element menjati (npr. animacija, transformacija), 
+što mu omogućava da unapred pripremi GPU ubrzanje i smanji "seckanje" prilikom tranzicija.*/
+/* GPU hint → manje flicka */
+.slide-right,
+.slide-left {
+	will-change: transform;
+}
+
+/* =========================
+	LAYOUT
+========================= */
+
 .container {
 	height: 320px;
-	width: 480px;
-
+	max-width: 480px;
 	margin: 0 auto;
-
-	display: flex;
-	align-items: center;
 }
 
-.btn-open-cookie {
-	height: inherit;
-	border: unset;
-	background-color: unset;
+.responsive-img {
+	width: 100%;
+	display: block;
 }
 
-img {
-	width: 480px;
-}
 main {
 	font-size: 24px;
-	margin-top: 20px;
 	border: 2px solid red;
 
 	margin: 0 1rem;
@@ -70,25 +97,36 @@ button {
 	cursor: pointer;
 }
 
+.btn-open-cookie {
+	height: inherit;
+	border: none;
+	background: none;
+}
+
+/* =========================
+	KEY CONTROLS
+========================= */
+
 .keys-container {
 	width: 50%;
 	position: absolute;
 
 	display: flex;
-	justify-content: inherit;
-
 	justify-content: space-around;
 }
 
 kbd {
 	width: 5rem;
 	height: 5rem;
+
 	background-color: #eeeeee;
 	border-radius: 50%;
 	border: 1px solid #b4b4b4;
+
 	box-shadow:
 		0 1px 1px rgb(0 0 0 / 0.2),
 		0 2px 0 0 rgb(255 255 255 / 0.7) inset;
+
 	color: #333333;
 
 	font-size: 2.5em;
@@ -103,6 +141,10 @@ kbd {
 	}
 }
 
+/* =========================
+	DECORATION
+========================= */
+
 .green {
 	background: rgba(87, 238, 137, 0.8);
 }
@@ -110,30 +152,50 @@ kbd {
 .circle {
 	position: absolute;
 
-	width: 80px;
-	height: 80px;
+	width: 4rem;
+	height: 4rem;
 	border-radius: 50%;
-	box-shadow: 0px 0px 1px 1px #0000001a;
+
+	box-shadow: 0 0 1px 1px #0000001a;
 }
 
 .left {
 	left: 20%;
 	top: 25%;
 }
+
 .right {
 	right: 23%;
 	top: 25%;
 }
 
+/* =========================
+	PULSE ANIMATION
+========================= */
+
 .pulse {
 	animation: pulse-animation 2s infinite;
+	will-change: box-shadow;
 }
+
+@keyframes pulse-animation {
+	0% {
+		box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.2);
+	}
+	100% {
+		box-shadow: 0 0 0 20px rgba(0, 0, 0, 0);
+	}
+}
+
+/* =========================
+	CONTROLS
+========================= */
 
 .controls-container {
 	z-index: 1;
-
 	position: absolute;
-	top: 20%;
+	top: 25%;
+
 	&.left-control {
 		left: 20%;
 	}
@@ -143,22 +205,20 @@ kbd {
 	}
 }
 
-@keyframes pulse-animation {
-	0% {
-		box-shadow: 0 0 0 0px rgba(0, 0, 0, 0.2);
-	}
-	100% {
-		box-shadow: 0 0 0 20px rgba(0, 0, 0, 0);
-	}
-}
+/* =========================
+	RESPONSIVE
+========================= */
 
-.d-md-none {
+.phone-only {
 	display: none;
 }
+
+/* desktop-first */
 @media (max-width: 768px) {
-	.d-md-none {
+	.phone-only {
 		display: block;
 	}
+
 	.d-sm-none {
 		display: none;
 	}
