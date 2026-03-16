@@ -59,10 +59,13 @@ const createBrokenCookieContainer = () => {
 
 const insertBrokenCookieImages = (brokenCookieContainer) => {
 	const parentContainer = document.querySelector('.container');
-	brokenCookieContainer.innerHTML = `
-		<img src="../../img/whole-cookie-split-left.png" alt="Kolacic srece" width="480" class="cookie-fortune absolute transition" />
-		<img src="../../img/whole-cookie-split-right.png" alt="Kolacic srece" width="480" class="cookie-fortune absolute transition" />`;
+	const cssClasses = 'cookie-fortune absolute transition prevent-select';
 
+	brokenCookieContainer.innerHTML = `
+		<img src="../../img/whole-cookie-split-left.png" alt="Kolacic srece" width="480" class="${cssClasses}" />
+		<img src="../../img/whole-cookie-split-right.png" alt="Kolacic srece" width="480" class="${cssClasses}" />`;
+
+	// ! Desava mi se flicker jer brisem btn, a dodajem broken cookie slike koje imaju transition. Mozda bih mogao da dodam opacity-0 na pocetku, a onda da je skinem nakon 50ms, kada se slike ubace u DOM. Tako ne bi bilo vidljivo da se slike ubacuju, a transition bi i dalje radio.
 	parentContainer.replaceChildren(brokenCookieContainer);
 };
 
@@ -78,11 +81,17 @@ const renderMessageFromHash = () => {
 	const { sentAt_timestamp, message, signature } = getHashParams();
 
 	renderMessagePaper({ message, signature, date: new Date(sentAt_timestamp) });
+	removeOpacityFromMessagePaper();
 };
 
+const removeOpacityFromMessagePaper = async () => {
+	await sleep(50);
+	const messagePaper = document.querySelector('main');
+	messagePaper.classList.remove('opacity-0');
+};
 const renderMessagePaper = ({ message, signature, date }) => {
 	const messageContainer = createDOMElement('main');
-	messageContainer.classList.add('absolute');
+	messageContainer.classList.add('absolute', 'transition', 'opacity-0');
 
 	messageContainer.appendChild(createDOMElement('p', { content: message }));
 	messageContainer.appendChild(

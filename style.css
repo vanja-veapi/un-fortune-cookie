@@ -21,6 +21,14 @@
 .slide-left {
 	transform: translateX(-15rem);
 }
+.opacity-0 {
+	opacity: 0;
+}
+.prevent-select {
+	-webkit-user-select: none; /* Safari */
+	-ms-user-select: none; /* IE 10 and IE 11 */
+	user-select: none; /* Standard syntax */
+}
 
 .flex-center {
 	display: flex;
@@ -43,7 +51,6 @@ main {
 	border: 2px solid red;
 
 	padding: 1rem;
-	z-index: -1;
 }
 
 button {
