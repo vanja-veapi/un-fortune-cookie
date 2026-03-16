@@ -8,7 +8,12 @@ const HOURS_PER_DAY = 24;
 const ONE_DAY_IN_MS =
 	HOURS_PER_DAY * MINUTES_PER_HOUR * SECONDS_PER_MINUTE * MS_PER_SECOND; // 86_400_000
 
-const MQ_MEDIUM_BREAKOPINT = 768;
+const MQ_MEDIUM_BREAKPOINT = 768;
+
+const COOKIE_X_START = 81;
+const COOKIE_X_END = 309;
+const COOKIE_Y_START = 134;
+const COOKIE_Y_END = 297;
 
 const redirectHome = (message) => {
 	alert(message);
@@ -29,14 +34,15 @@ export const openCookiePage = () => {
 		return;
 	}
 
-	if (window.screen.width <= MQ_MEDIUM_BREAKOPINT) {
-		document.addEventListener('touchstart', (ev) => {
-			console.log({ loc: ev.touches });
+	if (window.screen.width <= MQ_MEDIUM_BREAKPOINT) {
+		const handleTouchStart = (ev) => {
 			const hasTwoTouches = ev.touches.length === 2;
 			const isTouchInRange = (touch) => {
 				const { clientX: x, clientY: y } = touch;
-				const isInXRange = x >= 81 && x <= 309;
-				const isInYRange = y >= 134 && y <= 297;
+
+				const isInXRange = x >= COOKIE_X_START && x <= COOKIE_X_END;
+				const isInYRange = y >= COOKIE_Y_START && y <= COOKIE_Y_END;
+
 				return isInXRange && isInYRange;
 			};
 			if (
@@ -46,7 +52,10 @@ export const openCookiePage = () => {
 			) {
 				openFortuneCookie();
 			}
-		});
+		};
+
+		document.addEventListener('touchstart', handleTouchStart);
+		document.removeEventListener('touchstart', handleTouchStart);
 
 		return;
 	}
@@ -98,20 +107,13 @@ const playSound = () => {
 	// const audio = new Audio('../../audio/crunch.mp3');
 };
 const splitCookieAnimation = async () => {
-	createBrokenCookieContainer();
 	showBrokenCookieImages();
 
 	// Mora da se napravi mali delay kako bi animacija mogla da se primeni
-	await sleep(50);
+	await sleep(50); // requestAnimationFrame();
 
 	removeWholeCookieImage();
 	breakCookieAnimation();
-};
-
-const createBrokenCookieContainer = () => {
-	const cookieContainer = createDOMElement('div');
-	cookieContainer.classList.add('flex-center');
-	return cookieContainer;
 };
 
 const showBrokenCookieImages = () => {
