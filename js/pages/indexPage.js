@@ -1,5 +1,4 @@
 import { encodeUrlParam } from '../utils/encodeUrlParam.js';
-import { decodeUrlParam } from '../utils/decodeUrlParam.js';
 
 import fortuneCookie from '../../data/fortune-cookie.json' with { type: 'json' };
 import misfortuneCookie from '../../data/misfortune-cookie.json' with { type: 'json' };
@@ -47,10 +46,8 @@ const getCookieMessage = (checked) => {
 	return messages[randomIndex];
 };
 
-const validateForm = () => {
-	if (!STATE.checkedCookie)
-		throw new Error('Ovo polje je obavezno i mora da bude cekirano');
-};
+const isFieldChecked = () =>
+	STATE.checkedCookie === 'fortune' || STATE.checkedCookie === 'misfortune';
 
 const buildEncodedUrl = (cookieData) => {
 	const OPEN_COOKIE_HTML_PATHNAME = '/open-cookie.html';
@@ -83,15 +80,10 @@ const buildCookieData = () => {
 };
 
 const handleCreateCookie = () => {
-	validateForm();
+	if (!isFieldChecked()) return;
 
 	const cookieData = buildCookieData();
 	const encodedUrl = buildEncodedUrl(cookieData);
 
 	renderMessageSuccess(encodedUrl);
-
-	// !OVO JE ZA DEKODIRANJE nije deo koda koji ce ostati ovde
-	const decoded = decodeUrlParam(encodedUrl.hash.slice(1));
-	const params = new URLSearchParams(decoded);
-	console.log({ decoded, params, message: params.get('message') });
 };
