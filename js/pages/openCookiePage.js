@@ -152,6 +152,7 @@ const removeOpacityFromMessagePaper = async () => {
 	const messagePaper = document.querySelector('main');
 	messagePaper.classList.remove('opacity-0');
 };
+
 const renderMessagePaper = ({ message, signature, date }) => {
 	const messageContainer = createDOMElement('main');
 	messageContainer.classList.add('absolute', 'transition', 'opacity-0');
@@ -163,7 +164,7 @@ const renderMessagePaper = ({ message, signature, date }) => {
 
 	if (signature) {
 		messageContainer.appendChild(
-			createDOMElement('p', { content: `Potpis: ${signature}` }),
+			createDOMElement('i', { content: `Potpis: ${signature}` }),
 		);
 	}
 

@@ -10,6 +10,35 @@
 	box-sizing: border-box;
 }
 
+html {
+	color-scheme: light;
+}
+
+body {
+	min-height: 100vh;
+	font-family:
+		ui-sans-serif,
+		system-ui,
+		-apple-system,
+		Segoe UI,
+		Roboto,
+		Arial,
+		Noto Sans,
+		Ubuntu,
+		Cantarell,
+		Helvetica Neue,
+		sans-serif;
+	line-height: 1.5;
+	color: #0f172a;
+	background:
+		radial-gradient(1200px 600px at 15% 15%, rgba(255, 255, 255, 0.9), transparent 60%),
+		radial-gradient(900px 500px at 85% 25%, rgba(254, 243, 199, 0.85), transparent 55%),
+		linear-gradient(180deg, #f8fafc 0%, #f1f5f9 40%, #eef2ff 100%);
+	padding: clamp(16px, 3.5vw, 40px);
+
+	overflow: hidden;
+}
+
 /* =========================
 	UTILITIES
 ========================= */
@@ -29,6 +58,18 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
+}
+
+.flex-column {
+	flex-direction: column;
+}
+
+.gap-1 {
+	gap: 1rem;
+}
+
+.mt-3 {
+	margin-top: 3rem;
 }
 
 .opacity-0 {
@@ -74,6 +115,115 @@ određeni element menjati (npr. animacija, transformacija),
 	LAYOUT
 ========================= */
 
+.actions,
+#signature,
+#create-cookie-btn,
+span {
+	max-width: 760px;
+	width: 100%;
+}
+
+h1 {
+	max-width: 760px;
+	margin: 0 auto;
+	text-align: center;
+	letter-spacing: -0.03em;
+	line-height: 1.1;
+	font-size: clamp(28px, 4vw, 44px);
+	color: #0b1220;
+}
+
+.actions {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 1rem;
+}
+
+.choice {
+	display: grid;
+	grid-template-columns: 1fr auto;
+	align-items: center;
+	gap: 12px;
+	padding: 14px 16px;
+	border-radius: 16px;
+	border: 1px solid rgba(15, 23, 42, 0.12);
+	background: rgba(255, 255, 255, 0.75);
+	backdrop-filter: blur(10px);
+	box-shadow:
+		0 10px 30px rgba(15, 23, 42, 0.08),
+		0 1px 0 rgba(255, 255, 255, 0.7) inset;
+}
+
+.choice label {
+	font-weight: 650;
+	color: #0f172a;
+}
+
+.choice input[type='radio'] {
+	width: 20px;
+	height: 20px;
+	accent-color: #7c3aed;
+}
+
+/* Progressive enhancement: highlight selected option */
+@supports selector(.choice:has(input:checked)) {
+	.choice:has(input:checked) {
+		border-color: rgba(124, 58, 237, 0.35);
+		background: rgba(237, 233, 254, 0.65);
+		box-shadow:
+			0 14px 40px rgba(124, 58, 237, 0.12),
+			0 1px 0 rgba(255, 255, 255, 0.75) inset;
+	}
+}
+
+#signature {
+	padding: 1rem;
+	border-radius: 1rem;
+	border: 1px solid rgba(15, 23, 42, 0.12);
+	background: rgba(255, 255, 255, 0.85);
+	box-shadow:
+		0 10px 30px rgba(15, 23, 42, 0.06),
+		0 1px 0 rgba(255, 255, 255, 0.7) inset;
+}
+
+#signature:focus {
+	border-color: rgba(124, 58, 237, 0.5);
+	box-shadow:
+		0 0 0 4px rgba(124, 58, 237, 0.18),
+		0 10px 30px rgba(15, 23, 42, 0.06);
+}
+
+#create-cookie-btn {
+	padding: 1rem;
+	border-radius: 1rem;
+	border: 1px solid rgba(124, 58, 237, 0.35);
+	background-color: #6d28d9;
+	color: #fff;
+	font-weight: 700;
+	letter-spacing: 0.01em;
+	box-shadow:
+		0 14px 38px rgba(109, 40, 217, 0.24),
+		0 1px 0 rgba(255, 255, 255, 0.25) inset;
+
+	transition: background-color 0.4s ease;
+	&:hover {
+		background-color: #ffb34f;
+	}
+}
+
+span {
+	margin: 1rem 0;
+	display: block;
+	padding: 1rem;
+	border-radius: 16px;
+	border: 1px solid rgba(15, 23, 42, 0.12);
+	background: rgba(255, 255, 255, 0.85);
+	box-shadow:
+		0 16px 50px rgba(15, 23, 42, 0.1),
+		0 1px 0 rgba(255, 255, 255, 0.75) inset;
+	word-break: break-word;
+}
+
 .container {
 	height: 320px;
 	max-width: 480px;
@@ -86,11 +236,20 @@ određeni element menjati (npr. animacija, transformacija),
 }
 
 main {
-	font-size: 24px;
-	border: 2px solid red;
-
-	margin: 0 1rem;
+	width: min(420px, 92vw);
 	padding: 1rem;
+	border-radius: 1rem;
+	border: 1px solid rgba(15, 23, 42, 0.14);
+	background: rgba(255, 255, 255, 0.92);
+	backdrop-filter: blur(0.5rem);
+	box-shadow:
+		0 22px 70px rgba(15, 23, 42, 0.2),
+		0 1px 0 rgba(255, 255, 255, 0.75) inset;
+	font-size: 18px;
+
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
 }
 
 button {
