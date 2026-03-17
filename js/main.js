@@ -6,9 +6,6 @@ const routes = {
 	'/open-cookie.html': openCookiePage,
 };
 
-// Since github pages return <url>/un-fortune-cookie/ instead of <url>/ we need to check if the pathname includes 3rd element
-// /un-fortune-cookie/open-cookie.html
-// ! localhost -> /open-cookie.html
 function getRoutePath() {
 	const pathname = window.location.pathname;
 	const file = pathname.split('/').pop();
