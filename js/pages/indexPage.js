@@ -1,7 +1,8 @@
 import { encodeUrlParam } from '../utils/encodeUrlParam.js';
+import { decodeUrlParam } from '../utils/decodeUrlParam.js';
 
 import fortuneCookie from '../../data/fortune-cookie.json' with { type: 'json' };
-import { decodeUrlParam } from '../utils/decodeUrlParam.js';
+import misfortuneCookie from '../../data/misfortune-cookie.json' with { type: 'json' };
 
 const STATE = {
 	checkedCookie: null,
@@ -32,14 +33,18 @@ export const indexPage = () => {
 	createCookieButton.addEventListener('click', handleCreateCookie);
 };
 
-const getFortuneCookieMessage = () => {
-	const randomIndex = Math.floor(Math.random() * fortuneCookie.messages.length);
+const getRandomIndex = (array) => Math.floor(Math.random() * array.length);
 
-	return fortuneCookie.messages[randomIndex];
-};
+const getCookieMessage = (checked) => {
+	const isFortuneCookie = checked === 'fortune';
 
-const getMisfortuneCookieMessage = () => {
-	console.log('Under construction');
+	const messages = isFortuneCookie
+		? fortuneCookie.messages
+		: misfortuneCookie.messages;
+
+	const randomIndex = getRandomIndex(messages);
+
+	return messages[randomIndex];
 };
 
 const validateForm = () => {
@@ -71,9 +76,7 @@ const buildCookieData = () => {
 	const signatureValue = signature.value.trim();
 
 	return {
-		message: STATE.checkedCookie
-			? getFortuneCookieMessage()
-			: getMisfortuneCookieMessage(),
+		message: getCookieMessage(STATE.checkedCookie),
 		signature: signatureValue,
 		date: Date.now(),
 	};
